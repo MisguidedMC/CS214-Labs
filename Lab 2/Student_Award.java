@@ -5,15 +5,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Scanner;
-
+// important packages that is required for respective functions to work
 
 public class Student_Award{
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        // Scanner object created to accept user input
         PriorityQueue<Student> Student_info = new PriorityQueue<>();
+        // As part of the lab Priority Queue is created to pull out top x students for awards
 
         Comparator<Student> compare = new Comparator<>() {
-            
+            // Comparator is created in order to sort names in alphabetical order
             @Override
             public int compare(Student x, Student y){
                 return x.getName().compareTo(y.getName());
@@ -30,29 +32,36 @@ public class Student_Award{
             System.out.println("~~~~~~~MENU~~~~~~~~~");
             System.out.println("1. Display all Students");
             System.out.println("2  Display Prize Winners");
-            System.out.println("3  Print Students sorted in ABC order");
+            System.out.println("3  Print Students sorted in Alphabetical order");
             System.out.println("4  Exit");
             int option = scanner.nextInt();
             System.out.println("");
             
             switch(option){
+                // Case 1 Directly Polls/removes value from the queue and prints
                 case 1 -> { while(!Student_info.isEmpty()){
                     System.out.println(Student_info.poll());
                     }
                     Populate_PQueue(Student_info,file_path);
+                    // this function is used to re-fill queue
                 }
                 case 2 -> {
                     int count=0;
                     while(!Student_info.isEmpty()){
+                        // This portion puts a condition of a criteria for the award winners
                         if(Student_info.peek().getGPA()>=4.0&&count!=5){
+                            // using the conditions the first top x people is printed
                             System.out.println(Student_info.poll());
                             count++;
                         }else{
                             Student_info.poll();
                         }
+                        
                     }
-
+                    System.out.println("\n Congratulations for the students on being top scorers!!!..");
+                    System.out.println("They have been awarded a whooping $1000");
                     Populate_PQueue(Student_info, file_path);
+                    // this function is used to re-fill queue
                 }
                 case 3 -> {
                     ArrayList<Student> Student = new ArrayList<>();
@@ -86,13 +95,14 @@ public class Student_Award{
 
                 if(temp!=null){
                 /*
+
                 split is quite unique 0 indicates split towards left
                 String student_name=temp.split(",")[0];
                 split is quite unique 1 indicates split towards right
                 String student_GPA=temp.split(",")[1];
+
                 */
                 Student_info.add(new Student(temp.split(",")[0],Double.parseDouble(temp.split(",")[1])));
-               
                 }
             }
         }catch(Exception e){
